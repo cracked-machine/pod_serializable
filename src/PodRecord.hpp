@@ -42,13 +42,17 @@ public:
         return in;
     }
 
-    // universal member-to-string accessor
-    // supports byte/hex or ascii output format
-    template<class MEMBER>
-    std::string get(const MEMBER& member, bool to_ascii)
+    // Universal member-to-string accessor.
+    // pod_member: Pass in POD **object** member to get the string repr.
+    // to_ascii: The output format. ascii if true, byte/hex if false.
+    template<size_t SIZE>
+    std::string get(
+        const std::array<char, SIZE>& pod_member, 
+        bool to_ascii
+    )
     {
         std::stringstream out;
-        for( const char &b: member) { 
+        for( const char &b: pod_member) { 
             if (to_ascii) { out << std::dec << b; }
             else { out << std::hex << unsigned(b); }
         }

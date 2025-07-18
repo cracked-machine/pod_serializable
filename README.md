@@ -35,3 +35,15 @@ The binary file contains the following data:
 Serialization/deserialization uses streams and the overloaded insertion/extraction operators. Note that the member declaration order must be mirrored when reading/writing in the overloaded operators to prevent data corruption.
 
 A helper template function returns a string representation of any member in either hex or ascii.
+
+```
+// all outputs formatted as hex bytes
+1
+deadbeef00
+312e312e312e31000
+
+// last output formatted as ascii
+1
+deadbeef00
+1.1.1.1
+```

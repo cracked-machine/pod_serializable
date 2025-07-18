@@ -30,7 +30,7 @@ int main()
     
         std::cout << podRecord2.get(podRecord2.m_flag, false) << "\n";
         std::cout << podRecord2.get(podRecord2.m_field_one, false) << "\n";
-        std::cout << podRecord2.get(podRecord2.m_field_two, true) << "\n";
+        std::cout << podRecord2.get(podRecord2.m_field_two, false) << "\n";
     }
     
     return 0;

@@ -28,9 +28,12 @@ PodRecord podRecord {
 };
 ```
 
-The binary file contains the following data:
+The serialized binary file contains the following data:
 
 ![alt text](image-1.png)
+
+Note that the class member widths are honoured regardless of the input width; the serialization automtically zero-pads the remaining bytes.
+If the input width exceeds the class member width it will cause an error at compile-time.
 
 Serialization/deserialization uses streams and the overloaded insertion/extraction operators. Note that the member declaration order must be mirrored when reading/writing in the overloaded operators to prevent data corruption.
 

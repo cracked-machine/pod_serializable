@@ -2,41 +2,56 @@
 #include <array>
 #include <iostream>
 #include <string>
+#include <sstream>
 
 class PodRecord
 {
 private:
-    
+
+//  | name  ||  flag  | reserved | field 1 | reserved | field 2 |
+//  -----------------------------------------------------------
+//  | bytes ||    1   |    10    |   10    |    10    |   10    |
+//
+//
 public:
-    // important flag data, pass in true/false
     std::array<char, 1> m_flag{};
-    // don't care; pass in {}
-    std::array<char, 10> m_padding{};
-    // text data, pass in string literal
-    std::array<char, 12> m_field{};
+    std::array<char, 10> m_reserved_one{};
+    std::array<char, 10> m_field_one{};
+    std::array<char, 10> m_reserved_two{};
+    std::array<char, 10> m_field_two{};
 
     friend std::ostream& operator<<(std::ostream& out, const PodRecord& obj) 
     {
+        // writes must mirror member declaration order
         out.write(obj.m_flag.data(), obj.m_flag.size());
-        out.write(obj.m_padding.data(), obj.m_padding.size());
-        out.write(obj.m_field.data(), obj.m_field.size());
+        out.write(obj.m_reserved_one.data(), obj.m_reserved_one.size());
+        out.write(obj.m_field_one.data(), obj.m_field_one.size());
+        out.write(obj.m_reserved_one.data(), obj.m_reserved_two.size());
+        out.write(obj.m_field_two.data(), obj.m_field_two.size());
         return out;
     }
+
     friend std::istream& operator>>(std::istream& in, PodRecord& obj)
     {
+        // reads must mirror member declaration order
         in.read(obj.m_flag.data(), obj.m_flag.size());
-        in.read(obj.m_padding.data(), obj.m_padding.size());
-        in.read(obj.m_field.data(), obj.m_field.size());
+        in.read(obj.m_reserved_one.data(), obj.m_reserved_one.size());
+        in.read(obj.m_field_one.data(), obj.m_field_one.size());
+        in.read(obj.m_reserved_two.data(), obj.m_reserved_two.size());
+        in.read(obj.m_field_two.data(), obj.m_field_two.size());
         return in;
     }
 
-    unsigned get_flag_one()
+    // universal member-to-string accessor
+    // supports byte/hex or ascii output format
+    template<class MEMBER>
+    std::string get(MEMBER& member, bool to_ascii)
     {
-        return unsigned(m_flag[0]);
-    }
-
-    std::string get_field_one()
-    {
-        return {m_field.begin(), m_field.end()};
+        std::stringstream out;
+        for( const char &b: member) { 
+            if (to_ascii) { out << std::dec << b; }
+            else { out << std::hex << unsigned(b); }
+        }
+        return out.str();
     }
 };

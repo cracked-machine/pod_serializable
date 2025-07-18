@@ -9,7 +9,13 @@ int main()
         std::ofstream os{"pod.bin", os.binary};
         if( not os.is_open() ) { return 1; }
         
-        PodRecord podRecord{ true, {}, "helloworld" };
+        PodRecord podRecord { 
+            true, 
+            {}, // reserved
+            {0xD,0xE,0xA,0xD, 0xB, 0xE, 0xE, 0xF},
+            {}, // reserved
+            "1.1.1.1"
+        };
         os << podRecord;
         os.flush();
     }
@@ -19,10 +25,12 @@ int main()
         std::ifstream is{"pod.bin", is.binary};
         if( not is.is_open() ) { return 1; }
         
-        PodRecord podRecord2{0, {}, "overwriteme"};
+        PodRecord podRecord2;
         is >> podRecord2;
-        std::cout << podRecord2.get_flag_one() << "\n";
-        std::cout << podRecord2.get_field_one() << "\n";
+    
+        std::cout << podRecord2.get(podRecord2.m_flag, false) << "\n";
+        std::cout << podRecord2.get(podRecord2.m_field_one, false) << "\n";
+        std::cout << podRecord2.get(podRecord2.m_field_two, true) << "\n";
     }
     
     return 0;

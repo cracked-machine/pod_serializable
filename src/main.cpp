@@ -9,8 +9,7 @@ int main()
         std::ofstream is{"pod.bin", is.binary};
         if( not is.is_open() ) { return 1; }
         
-        PodRecord podRecord{true, {}, "helloworld"};
-
+        PodRecord podRecord{ true, {}, "helloworld" };
         is << podRecord;
         is.flush();
     }

@@ -45,7 +45,7 @@ public:
     // universal member-to-string accessor
     // supports byte/hex or ascii output format
     template<class MEMBER>
-    std::string get(MEMBER& member, bool to_ascii)
+    std::string get(const MEMBER& member, bool to_ascii)
     {
         std::stringstream out;
         for( const char &b: member) { 

@@ -1,1 +1,0 @@
-/usr/bin/c++ CMakeFiles/fstream_binary.dir/main.cpp.o CMakeFiles/fstream_binary.dir/DataRecord.cpp.o -o fstream_binary 

@@ -1,3 +1,0 @@
-/workspaces/pod_serializable/build/CMakeFiles/pod_serial.dir
-/workspaces/pod_serializable/build/CMakeFiles/edit_cache.dir
-/workspaces/pod_serializable/build/CMakeFiles/rebuild_cache.dir

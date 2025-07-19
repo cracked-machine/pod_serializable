@@ -9,10 +9,19 @@
                 "ms-vscode.cpptools",
                 "twxs.cmake",
                 "xaver.clang-format",
-                "ms-vscode.hexeditor"
-            ]
+                "ms-vscode.hexeditor",
+                "cschlosser.doxdocgen"
+
+            ],
+            "settings": {
+                "clangd.arguments": [
+                    "-background-index",
+                    "-compile-commands-dir=build"
+                ]
+            }
         }
     },
     "remoteUser": "user",
-    "containerUser": "user"
+    "containerUser": "user",
+    
 }

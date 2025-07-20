@@ -1,6 +1,8 @@
 
 This simple example demonstrates how to serialize/deserialize a POD-type object to binary file with padding.
 
+## POD Class
+
 The POD class contains five members, two of which are reserved regions:
 
 |name|width (bytes)|
@@ -28,6 +30,19 @@ PodRecord podRecord {
 };
 ```
 
+## Serialization
+
+Because we are using POD classes, the member declaration order must be mirrored when reading/writing in the serialization/deserialization operation.
+
+Two examples of serialization/deserialization are shown. Both methods use streams:
+
+1. Using overloaded insertion/extraction operators. 
+   - The right hand operand is a user-defined object so the overloaded operator must be a non-member. Here we use `friend` to allow the operator to be placed within the class declaration.
+2. Using member functions. 
+   - Allows direct access to POD members from with the serialization/deserialization function.
+
+I am torn between which method I prefer here: I like the stream syntax exposed to the user by the first method, but I prefer the encapsulation offered by the second method. In my opinion, having a non-member function as a custom object serializer/deserializer is an anti-pattern.
+
 The serialized binary file contains the following data:
 
 ![alt text](image-1.png)
@@ -35,7 +50,7 @@ The serialized binary file contains the following data:
 Note that the class member widths are honoured regardless of the input width; the serialization automtically zero-pads the remaining bytes.
 If the input width exceeds the class member width it will cause an error at compile-time.
 
-Serialization/deserialization uses streams and the overloaded insertion/extraction operators. Note that the member declaration order must be mirrored when reading/writing in the overloaded operators to prevent data corruption.
+## Pretty Printing
 
 A helper template function returns a string representation of any member in either hex or ascii.
 

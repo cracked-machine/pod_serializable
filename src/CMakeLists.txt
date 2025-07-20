@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.10)
 set(BUILD pod_serial)
 project(${BUILD})
 
-add_compile_options(-fsanitize=address)
+add_compile_options(-fsanitize=address -std=c++20)
 add_link_options(-fsanitize=address)
 
 add_executable(${BUILD}

@@ -1,7 +1,7 @@
 
 This simple example demonstrates how to serialize/deserialize a POD-type object to binary file with padding.
 
-## POD Class
+## PODRecord Class
 
 The POD class contains five members, two of which are reserved regions:
 
@@ -37,6 +37,13 @@ We can use STL `std::arrays` in POD classes because they resolve to the underlyi
 
 Using the std::array rather than C-style arrays allows easier handling of the array and avoids pointers.
 
+## OORecord class
+
+Using Non-POD classes provides the advantages of object orientated programming. Lets be honest: allowing inheritance and interfaces is going to make unit testing much easier. Of course there is no free lunch:
+
+1. You have to write a special constructor to initilize the object. This is a minor inconvenience. On its own, this does not contribute to any binary output penalty.
+2. Serializing a class that derives from a base class with a virtual destructor __will pollute your binary output__. The binary file ended up 15 bytes larger than the POD equivalent and contained bytes that we didn't want to serialize! The workaround is to manually write/read each member directly to the stream for serialize/deserialize operations. Note this is trivial for byte arrays, but care must still be taken to mirror the declaration order of the members or you will get data corruption. If only C++ had reflection we could iterate its members...
+
 ## Serialization
 
 The serialized binary file contains the following data:
@@ -46,7 +53,7 @@ The serialized binary file contains the following data:
 Some noteworthy points:
 
 - The class member widths are honoured regardless of the input width; the serialization automtically zero-pads the remaining bytes. If the input width exceeds the class member width it will cause an error at compile-time.
-- Because we are using POD classes, the member declaration order must be mirrored when reading/writing in the serialization/deserialization operation.
+- Because we are using POD classes, we can simply serialize/deserialize the entire obj without incurring any size penalty that would occur with regular classes.
 
 Two examples of serialization/deserialization are shown. Both methods use streams:
 

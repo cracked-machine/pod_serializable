@@ -13,7 +13,7 @@ The class contains five members, two of which are reserved regions:
 
 ## POD Class
 
-With the PODRecord classes, you must initialize the object using aggregate initialization:
+With the POD class - `PodRecord.hpp` - you must initialize the object using aggregate initialization:
 
 ```
 // Note: 
@@ -21,7 +21,7 @@ With the PODRecord classes, you must initialize the object using aggregate initi
 //    the member can be initialised with empty braces
 // 2. Ascii text can be initialized using a string literal
 
-PodRecord podRecord { 
+PodRecord record { 
     true, 
     {}, // reserved
     {0xD,0xE,0xA,0xD, 0xB, 0xE, 0xE, 0xF},
@@ -39,7 +39,22 @@ Using the std::array rather than C-style arrays allows easier handling of the ar
 
 ## Non-POD class
 
-With the Non-POD class - `OORecord.hpp` - you must use initialise each each member with braces.
+With the Non-POD class - `OORecord.hpp` - you must use initialise each each member with braces:
+
+```
+// Note: 
+// 1. All members are zero-initialized so if you dont care 
+//    the member can be initialised with empty braces
+// 2. Ascii text can be initialized using a string literal
+
+OORecord record { 
+    {true}, 
+    {}, // reserved
+    {0xD,0xE,0xA,0xD, 0xB, 0xE, 0xE, 0xF},
+    {}, // reserved
+    {"1.1.1.1"}
+};
+```
 
 Using Non-POD classes provides the advantages of object orientated programming. Lets be honest: allowing inheritance and interfaces is going to make unit testing much easier. Of course there is no free lunch:
 

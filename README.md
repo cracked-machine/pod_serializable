@@ -32,7 +32,14 @@ PodRecord podRecord {
 
 ## Serialization
 
-Because we are using POD classes, the member declaration order must be mirrored when reading/writing in the serialization/deserialization operation.
+The serialized binary file contains the following data:
+
+![alt text](image-1.png)
+
+Some noteworthy points:
+
+- The class member widths are honoured regardless of the input width; the serialization automtically zero-pads the remaining bytes. If the input width exceeds the class member width it will cause an error at compile-time.
+- Because we are using POD classes, the member declaration order must be mirrored when reading/writing in the serialization/deserialization operation.
 
 Two examples of serialization/deserialization are shown. Both methods use streams:
 
@@ -43,12 +50,6 @@ Two examples of serialization/deserialization are shown. Both methods use stream
 
 I am torn between which method I prefer here: I like the stream syntax exposed to the user by the first method, but I prefer the encapsulation offered by the second method. In my opinion, having a non-member function as a custom object serializer/deserializer is an anti-pattern.
 
-The serialized binary file contains the following data:
-
-![alt text](image-1.png)
-
-Note that the class member widths are honoured regardless of the input width; the serialization automtically zero-pads the remaining bytes.
-If the input width exceeds the class member width it will cause an error at compile-time.
 
 ## Pretty Printing
 

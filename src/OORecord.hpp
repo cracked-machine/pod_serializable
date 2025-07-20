@@ -23,12 +23,16 @@ public:
    * @return std::ostream&
    */
   void serialize(std::ostream &out) {
+    // this is will additionally serialize the vtable of the object 
+    // out.write(reinterpret_cast<const char*>(this), sizeof(*this));
+
     // writes must mirror member declaration order
     out.write(m_flag.data(), m_flag.size());
     out.write(m_reserved_one.data(), m_reserved_one.size());
     out.write(m_field_one.data(), m_field_one.size());
     out.write(m_reserved_one.data(), m_reserved_two.size());
     out.write(m_field_two.data(), m_field_two.size());
+
     out.flush();
   }
 

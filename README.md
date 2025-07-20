@@ -1,9 +1,7 @@
 
 This simple example demonstrates binary I/O using both POD and Non-POD classes.
 
-## PODRecord Class
-
-The POD class contains five members, two of which are reserved regions:
+The class contains five members, two of which are reserved regions:
 
 |name|width (bytes)|
 |:--|:--:|
@@ -13,7 +11,9 @@ The POD class contains five members, two of which are reserved regions:
 |m_reserved_two|10|
 |m_field_two|10|
 
-As with all POD classes, you must initialize the object using aggregate initialization:
+## POD Class
+
+With the PODRecord classes, you must initialize the object using aggregate initialization:
 
 ```
 // Note: 
@@ -37,12 +37,18 @@ We can use STL `std::arrays` in POD classes because they resolve to the underlyi
 
 Using the std::array rather than C-style arrays allows easier handling of the array and avoids pointers.
 
-## OORecord class
+## Non-POD class
+
+With the Non-POD class - `OORecord.hpp` - you must use initialise each each member with braces.
 
 Using Non-POD classes provides the advantages of object orientated programming. Lets be honest: allowing inheritance and interfaces is going to make unit testing much easier. Of course there is no free lunch:
 
 1. You have to write a special constructor to initilize the object. This is a minor inconvenience. On its own, this does not contribute to any binary output penalty.
-2. Serializing a class that derives from a base class with a virtual destructor __will pollute your binary output__. The binary file ended up 15 bytes larger than the POD equivalent and contained bytes that we didn't want to serialize! The workaround is to manually write/read each member directly to the stream for serialize/deserialize operations. Note this is trivial for byte arrays, but care must still be taken to mirror the declaration order of the members or you will get data corruption. If only C++ had reflection we could iterate its members...
+2. Serializing a class that derives from a base class with a virtual destructor __will pollute your binary output__. The binary file ended up 15 bytes larger than the POD equivalent and contained bytes that we didn't want to serialize! See the preceding 8 bytes (vtable?) and 7 bytes of zero padding at the end:
+
+   ![alt text](pollute.png)
+
+   The workaround is to manually write/read each member directly to the stream for serialize/deserialize operations. Note this is trivial for byte arrays, but care must still be taken to mirror the declaration order of the members or you will get data corruption. If only C++ had reflection we could iterate its members...
 
 ## Serialization
 

@@ -31,7 +31,7 @@ int test_oorecord() {
       return 1;
     }
 
-    OORecord record({1}, {},                                      
+    OORecord record({true}, {},                                      
                     {0xD, 0xE, 0xA, 0xD, 0xB, 0xE, 0xE, 0xF}, {},
                     {"1.1.1.1"});
     record.serialize(os);

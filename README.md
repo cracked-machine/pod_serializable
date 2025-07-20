@@ -1,5 +1,5 @@
 
-This simple example demonstrates how to serialize/deserialize a POD-type object to binary file with padding.
+This simple example demonstrates binary I/O using both POD and Non-POD classes.
 
 ## PODRecord Class
 

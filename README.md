@@ -30,11 +30,18 @@ PodRecord podRecord {
 };
 ```
 
+We can use STL `std::arrays` in POD classes because they resolve to the underlying POD types:
+
+![alt text](podtrad.png)
+![alt text](podstl.png)
+
+Using the std::array rather than C-style arrays allows easier handling of the array and avoids pointers.
+
 ## Serialization
 
 The serialized binary file contains the following data:
 
-![alt text](image-1.png)
+![alt text](bin.png)
 
 Some noteworthy points:
 
